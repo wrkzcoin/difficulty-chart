@@ -1,0 +1,94 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>WRKZ : DIFF, SUPPLY</title>
+<style>
+      .chart-container {
+	    position: relative;
+        width: 1280px;
+        height: auto;
+      }
+    </style>
+</head>
+<body>
+<div class="chart-container">
+<canvas id="mycanvas"></canvas>
+</div>
+
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/Chart.min.js"></script>
+<script>
+		$(document).ready(function(){
+		  $.ajax({
+			url : "/graph/data_json.php",
+			type : "GET",
+			success : function(data){
+			  console.log(data);
+
+			  var height = [];
+			  var supply = [];
+			  var hashrate = [];
+			  var difficulty = [];
+
+			  for(var i in data) {
+				height.push("H " + data[i].height);
+				supply.push(data[i].alreadyGeneratedCoins);
+				hashrate.push(data[i].hashrate);
+				difficulty.push(data[i].difficulty);
+			  }
+
+			  var chartdata = {
+				labels: height,
+				datasets: [
+				  {
+					label: "Supply (M)",
+					fill: false,
+					lineTension: 0.1,
+					backgroundColor: "rgba(59, 89, 152, 0.75)",
+					borderColor: "rgba(59, 89, 152, 1)",
+					pointHoverBackgroundColor: "rgba(59, 89, 152, 1)",
+					pointHoverBorderColor: "rgba(59, 89, 152, 1)",
+					data: supply,
+					pointRadius: 0
+				  },
+				  {
+					label: "Hashrate",
+					fill: false,
+					lineTension: 0.1,
+					backgroundColor: "rgba(29, 202, 255, 0.75)",
+					borderColor: "rgba(29, 202, 255, 1)",
+					pointHoverBackgroundColor: "rgba(29, 202, 255, 1)",
+					pointHoverBorderColor: "rgba(29, 202, 255, 1)",
+					data: hashrate,
+					pointRadius: 0
+				  },
+				  {
+					label: "Diff",
+					fill: false,
+					lineTension: 0.1,
+					backgroundColor: "rgba(211, 72, 54, 0.75)",
+					borderColor: "rgba(211, 72, 54, 1)",
+					pointHoverBackgroundColor: "rgba(211, 72, 54, 1)",
+					pointHoverBorderColor: "rgba(211, 72, 54, 1)",
+					data: difficulty,
+					pointRadius: 0
+				  }
+				]
+			  };
+
+			  var ctx = $("#mycanvas");
+
+			  var LineGraph = new Chart(ctx, {
+				type: 'line',
+				data: chartdata
+			  });
+			},
+			error : function(data) {
+
+			}
+		  });
+		});
+	</script>
+</body>
+</html>

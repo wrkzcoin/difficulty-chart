@@ -1,0 +1,23 @@
+CREATE TABLE `blockinfo` (
+`id` bigint(20) NOT NULL AUTO_INCREMENT,
+`height` bigint(20) NOT NULL,
+`major_version` smallint(3) NOT NULL,
+`minor_version` smallint(3) NOT NULL,
+`alreadyGeneratedCoins` bigint(16) NOT NULL,
+`alreadyGeneratedTransactions` bigint(20) NOT NULL,
+`baseReward` bigint(13) NOT NULL,
+`reward` bigint(13) NOT NULL,
+`nonce` bigint(13) NOT NULL,
+`blockSize` int(11) NOT NULL,
+`difficulty` bigint(16) NOT NULL,
+`timestamp` int(11) NOT NULL,
+`totalFeeAmount` int(11) NOT NULL,
+`hash` varchar(64) CHARACTER SET ascii NOT NULL,
+`prev_hash` varchar(64) CHARACTER SET ascii NOT NULL,
+`orphan_status` enum('true','false') NOT NULL,
+`penalty` float NOT NULL,
+`numTx` smallint(6) NOT NULL,
+PRIMARY KEY (`id`),
+KEY `height` (`height`),
+KEY `hash` (`hash`)
+) ENGINE=InnoDB
